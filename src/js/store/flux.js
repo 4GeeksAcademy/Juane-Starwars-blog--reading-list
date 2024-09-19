@@ -20,8 +20,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
+				state.actions.loadSomeData();
+				
+					/*fetch().then().then(data => setStore({ "foo": data.bar }))
 				*/
 			},
 			changeColor: (index, color) => {
