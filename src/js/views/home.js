@@ -1,25 +1,45 @@
-import React, { useState } from "react";
-import rigoImage from "../../img/rigo-baby.jpg";
+import React, { useState, useContext, useEffect } from "react";
+import { Context } from "../store/appContext";
 import "../../styles/home.css";
-import { Characters } from "../component/Characters";
+import { CharactersCard } from "../component/charactersCard";
+import { PlanetsCard } from "../component/planetsCard";
+import { useParams } from "react-router";
 
 export const Home = () => {
-	const [starShips, setStarShips] = useState({});
+    const { store, actions } = useContext(Context);
+    const [charaters, setCharaters] = useState([]);
+    const params = useParams();
 
-	return(
-	<>
-	<Characters/>
-		<div className="text-center mt-5 container-fluid">
-					<h1>Hello Rigo desde home!</h1>
-			<div className="card" style={{width: '18rem'}}>
-					<img src={rigoImage} className="card-img-top" alt="..."/>
-				<div className="card-body">
-					<h5 className="card-title">Card title</h5>
-					<p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					<a href="#" className="btn btn-primary">Go somewhere</a>
-				</div>
-			</div>
-		</div>
-	</>
-	);
+    useEffect(() => {
+        if (params.uid && params.entities === "characters") {
+            actions.getCharactersById(params.uid);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (params.uid && params.entities === "planets") {
+            actions.getPlanetsById(params.uid);
+        }
+    }, []);
+
+    return (
+        <>
+            <div className="container">
+                <div>
+                    <h1 className="text-danger mb-4">Characters</h1>
+                    <div className="overflow-auto row flex-nowrap">
+                        {store.characters && store.characters.length > 0 ? store.characters.map((character) => (<CharactersCard
+                            key={character.uid} entities={character} entity="characters" addFavorites={actions.addFavorites} />)) : ""}
+                    </div>
+                </div>
+                <div>
+                    <h1 className="text-danger mb-4">Planets</h1>
+                    <div className="overflow-auto row flex-nowrap">
+                        {store.planets && store.planets.length > 0 ? store.planets.map((planet) => (<PlanetsCard
+                            key={planet.uid} entities={planet} entity="planets" addFavorites={actions.addFavorites} />)) : ""}
+                    </div>
+                </div>
+            </div>
+        </>
+    );
 };

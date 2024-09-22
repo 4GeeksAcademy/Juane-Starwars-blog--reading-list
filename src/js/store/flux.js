@@ -1,3 +1,4 @@
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -12,7 +13,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			characters: [],
+			planets: [],
+			favorites: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -20,25 +24,62 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 			loadSomeData: () => {
-				state.actions.loadSomeData();
+				fetch('https://www.swapi.tech/api/people/')
+				.then((response) => response.json())
+				.then((data)=> setStore({charaters: data.results}))
 				
-					/*fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
+				
 			},
-			changeColor: (index, color) => {
-				//get the store
+			getInitialCharacters: () => {
+				fetch('https://www.swapi.tech/api/people')
+				.then((response) => response.json())
+				.then(response => {setStore({ characters: response.results });})
+			},
+			getCharactersById: (id, setCharacter) => {
+				fetch(`https://www.swapi.tech/api/people/${id}`)
+				.then((response) => response.json())
+				.then(response => {setCharacter(response.result);})
+			},
+			getInitialPlanets: () => {
+				fetch(`https://www.swapi.tech/api/planets`)
+				.then((response) => response.json())
+				.then(response => {setStore({ planets: response.results });})
+				
+			},
+			getPlanetsById: (id, setPlanet) => {
+				fetch(`https://www.swapi.tech/api/planets/${id}`)
+				.then((response) => response.json())
+				.then(response => {setPlanet(response.result);})
+				
+			},
+
+			addFavorites: (newFavorite) => {
 				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
+				const favorite = store.favorites.concat(newFavorite);
+				setStore({ favorites: favorite });
+			},
+			removeFavorites: (index) => {
+				const store = getStore();
+				const favorite = store.favorites.filter((c, i) => {
+					return index !== i
 				});
+				setStore({ favorites: favorite });
+			},
 
-				//reset the global store
-				setStore({ demo: demo });
-			}
+			// changeColor: (index, color) => {
+			// 	//get the store
+			// 	const store = getStore();
+
+			// 	//we have to loop the entire demo array to look for the respective index
+			// 	//and change its color
+			// 	const demo = store.demo.map((elm, i) => {
+			// 		if (i === index) elm.background = color;
+			// 		return elm;
+			// 	});
+
+			// 	//reset the global store
+			// 	setStore({ demo: demo });
+			// }
 		}
 	};
 };
