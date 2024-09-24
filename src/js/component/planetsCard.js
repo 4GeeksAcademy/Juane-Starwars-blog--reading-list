@@ -18,7 +18,7 @@ export const PlanetsCard = (props) => {
 	return (
         
             <div className="card p-0 m-3" style={{width: "17rem"}}>
-                <img className="card-img-top" src="https://via.placeholder.com/400x200" alt="Card image cap"/>
+                <img className="card-img-top" src={`https://starwars-visualguide.com/assets/img/planets/${props.entities.uid}.jpg`} onError={(e)=> e.target.src = 'https://starwars-visualguide.com/assets/img/placeholder.jpg'} height={270} alt="Card image cap"/>
                 <div className="card-body">
                         <h5 className="card-title">{props.entities.name}</h5>
                     <div className="container d-flex row">

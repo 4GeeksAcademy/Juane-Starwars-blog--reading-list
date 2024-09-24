@@ -17,6 +17,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			characters: [],
 			planets: [],
 			favorites: []
+			
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -34,11 +35,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				fetch('https://www.swapi.tech/api/people')
 				.then((response) => response.json())
 				.then(response => {setStore({ characters: response.results });})
+				
 			},
 			getCharactersById: (id, setCharacter) => {
 				fetch(`https://www.swapi.tech/api/people/${id}`)
 				.then((response) => response.json())
 				.then(response => {setCharacter(response.result);})
+				
 			},
 			getInitialPlanets: () => {
 				fetch(`https://www.swapi.tech/api/planets`)
@@ -53,11 +56,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 				
 			},
 
+
 			addFavorites: (newFavorite) => {
 				const store = getStore();
-				const favorite = store.favorites.concat(newFavorite);
-				setStore({ favorites: favorite });
+				const actions = getActions()
+				const isFavorite = store.favorites.indexOf(newFavorite)
+				console.log(isFavorite)
+				if(isFavorite == -1){
+
+					const favorite = store.favorites.concat(newFavorite);
+					setStore({ favorites: favorite });
+				}else{
+					actions.removeFavorites(isFavorite)
+				}
+				
 			},
+
+
 			removeFavorites: (index) => {
 				const store = getStore();
 				const favorite = store.favorites.filter((c, i) => {
