@@ -1,6 +1,7 @@
 [star war logo](https://github.com/4GeeksAcademy/Juane-Starwars-blog--reading-list/blob/1720c6706fc52b31dc93a54685efa73ffe53f66a/src/img/starwar_logo.png)
 # WebApp boilerplate with React JS
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io#https://github.com/4GeeksAcademy/react-hello-webapp.git)
+[![Open in Codeanywhere](https://codeanywhere.com/img/open-in-codeanywhere-btn.svg)](https://app.codeanywhere.com/#https://github.com/4GeeksAcademy/react-hello-webapp.git)
 
 <p align="center">
 <a href="https://www.loom.com/share/f37c6838b3f1496c95111e515e83dd9b"><img src="https://github.com/4GeeksAcademy/react-hello-webapp/blob/master/src/img/how-to.png?raw=true" /></a>
